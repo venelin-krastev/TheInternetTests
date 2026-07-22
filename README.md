@@ -25,8 +25,9 @@ Automated UI tests for [The Internet](https://the-internet.herokuapp.com) — a 
 | `HoverTests.cs` | `/hovers` | 6 |
 | `DragAndDropTests.cs` | `/drag_and_drop` | 2 |
 | `FileUploadTests.cs` | `/upload` | 2 |
+| `ContextMenuTests.cs` | `/context_menu` | 3 |
 
-**Total: 35 tests**
+**Total: 38 tests**
 
 ## Project Structure
 
@@ -57,10 +58,11 @@ TheInternetTests/
 
 ## Key Concepts Demonstrated
 
-- **Page Object Model (POM)** — 9 Page Objects, one per page
+- **Page Object Model (POM)** — 10 Page Objects, one per page
 - **BaseTest abstraction** — shared `[SetUp]` and `[TearDown]`, screenshot on failure saved to `TestDirectory`
 - **Actions class** — hover interactions and drag & drop
 - **File upload** — `SendKeys()` on file input bypasses OS dialog
+- **Context menu** — `Actions.ContextClick()` for right-click, `SwitchTo().Alert()` for JS alert
 - **WebDriverWait** — explicit waits with lambda conditions, no `Thread.Sleep`
 - **SelectElement** — dropdown interaction
 - **JS Alerts** — `SwitchTo().Alert()` for alert, confirm, and prompt dialogs

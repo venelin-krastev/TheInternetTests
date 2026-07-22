@@ -26,20 +26,28 @@ public class HoverPage
 
     public void HoverOverAvatar(int index)
     {
-        var avatars = wait.Until(d => d.FindElements(Avatars));
-        var actions = new Actions(driver);
-        actions.MoveToElement(avatars[index]).Perform();
+        var avatars = wait.Until(d => {
+            var els = d.FindElements(Avatars);
+            return els.Count > index ? els : null;
+        });
+        new Actions(driver).MoveToElement(avatars[index]).Perform();
     }
 
     public string GetCaptionText(int index)
     {
-        var captions = wait.Until(d => d.FindElements(HoverCaption));
+        var captions = wait.Until(d => {
+            var els = d.FindElements(HoverCaption);
+            return els.Count > index ? els : null;
+        });
         return captions[index].Text;
     }
 
     public bool IsViewProfileLinkVisible(int index)
     {
-        var links = wait.Until(d => d.FindElements(ViewProfileLink));
+        var links = wait.Until(d => {
+            var els = d.FindElements(ViewProfileLink);
+            return els.Count > index ? els : null;
+        });
         return links[index].Displayed;
     }
 }
