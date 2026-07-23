@@ -32,7 +32,11 @@ public class IFramePage
 
     public string GetEditorText()
     {
-        return driver.FindElement(By.CssSelector("body#tinymce")).Text;
+        return wait.Until(d => {
+            var text = ((IJavaScriptExecutor)d)
+                .ExecuteScript("return document.querySelector('body#tinymce')?.innerText;") as string;
+            return string.IsNullOrWhiteSpace(text) ? null : text;
+        }) ?? string.Empty;
     }
 
     public void SetEditorText(string text)
