@@ -1,19 +1,17 @@
-using OpenQA.Selenium;
 using TheInternetTests.Pages;
 
 namespace TheInternetTests;
 
 [TestFixture]
-public class IFrameTests
+public class IFrameTests : BaseTest
 {
-    private IWebDriver driver;
     private IFramePage iframePage;
 
     [SetUp]
-    public void Setup()
+    public override void Setup()
     {
-        driver = DriverFactory.Create();
-        iframePage = new IFramePage(driver);
+        base.Setup();
+        iframePage = new IFramePage(Driver);
     }
 
     [Test]
@@ -21,7 +19,8 @@ public class IFrameTests
     {
         iframePage.Open();
         iframePage.SwitchToIFrame();
-        Assert.That(iframePage.GetEditorText(), Does.Contain("Your content goes here."));
+        Assert.That(iframePage.GetEditorText(), Does.Contain("Your content goes here."),
+            "TinyMCE editor should load with default content");
     }
 
     [Test]
@@ -30,7 +29,8 @@ public class IFrameTests
         iframePage.Open();
         iframePage.SwitchToIFrame();
         iframePage.SetEditorText("Hello from Selenium");
-        Assert.That(iframePage.GetEditorTextViaJs(), Does.Contain("Hello from Selenium"));
+        Assert.That(iframePage.GetEditorTextViaJs(), Does.Contain("Hello from Selenium"),
+            "Editor text should reflect what was set via JavaScript");
     }
 
     [Test]
@@ -39,13 +39,7 @@ public class IFrameTests
         iframePage.Open();
         iframePage.SwitchToIFrame();
         iframePage.SwitchToMainPage();
-        Assert.That(driver.Title, Is.EqualTo("The Internet"));
-    }
-
-    [TearDown]
-    public void TearDown()
-    {
-        driver.Quit();
-        driver.Dispose();
+        Assert.That(Driver.Title, Is.EqualTo("The Internet"),
+            "After switching back, driver context should be on main page");
     }
 }
